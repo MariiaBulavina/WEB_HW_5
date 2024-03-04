@@ -3,10 +3,11 @@ from datetime import datetime, timedelta
 import logging
 
 import aiohttp
-import websockets
 import names
+import websockets
 from websockets import WebSocketServerProtocol
 from websockets.exceptions import ConnectionClosedOK
+
 
 URL = 'https://api.privatbank.ua/p24api/exchange_rates?date='
 
@@ -72,6 +73,7 @@ async def main_ex(days):
 
 
 class Server:
+
     clients = set()
 
     async def register(self, ws: WebSocketServerProtocol):
@@ -93,13 +95,14 @@ class Server:
     async def ws_handler(self, ws: WebSocketServerProtocol):
         await self.register(ws)
         try:
-            await self.distrubute(ws)
+            await self.distribute(ws)
         except ConnectionClosedOK:
             pass
         finally:
             await self.unregister(ws)
 
-    async def distrubute(self, ws: WebSocketServerProtocol):
+    async def distribute(self, ws: WebSocketServerProtocol):
+        
         async for message in ws:
             if message.startswith('exchange'):
 

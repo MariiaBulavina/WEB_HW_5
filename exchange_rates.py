@@ -6,7 +6,6 @@ import sys
 import aiohttp
 
 
-
 URL = 'https://api.privatbank.ua/p24api/exchange_rates?date='
 
 
